@@ -4,6 +4,9 @@ import {Toaster} from "sonner"
 import LandingPage from './common/landing/LandingPage'
 import Loginn from './features/auth/Loginn'
 import Register from './features/auth/Register'
+import UserRoutes from './Router/student/UserRouter'
+import MentorRouter from './Router/mentor/MentorRouter'
+import AdminRouter from './Router/admin/AdminRouter'
 
 function App() {
  
@@ -14,6 +17,10 @@ function App() {
       <Route path='/' element={<LandingPage/>}/>
       <Route path='/login' element={<Loginn/>}/>
       <Route path='/register' element={<Register/>}/>
+
+      {UserRoutes}
+      {MentorRouter}
+      {AdminRouter}
     </Routes>
      
     </div>

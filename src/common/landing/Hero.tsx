@@ -216,7 +216,7 @@ function Hero() {
               </Link>
 
               <Link
-                to="/user/dashboard"
+                to="/student/dashboard"
                 className="group flex items-center gap-4"
               >
                 <div className="grid h-14 w-14 place-items-center rounded-full border border-violet-200 transition-transform group-hover:scale-110">
