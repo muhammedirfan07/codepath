@@ -7,6 +7,8 @@ import Register from './features/auth/Register'
 import UserRoutes from './Router/student/UserRouter'
 import MentorRouter from './Router/mentor/MentorRouter'
 import AdminRouter from './Router/admin/AdminRouter'
+import Eorro404page from './common/Eorro404page'
+
 
 function App() {
  
@@ -21,6 +23,7 @@ function App() {
       {UserRoutes}
       {MentorRouter}
       {AdminRouter}
+       <Route path="/404" element={<Eorro404page/>}/>
     </Routes>
      
     </div>

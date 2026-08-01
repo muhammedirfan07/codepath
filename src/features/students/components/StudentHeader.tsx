@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Bell, Menu, Sparkles } from "lucide-react";
+import { Bell,  PanelLeftOpen, Sparkles } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
 const ROUTE_HEADINGS: Record<string, { title: string; subtitle: string }> = {
@@ -90,9 +90,9 @@ function StudentHeader({ onMenuClick }: StudentHeaderProps) {
         <button
           onClick={onMenuClick}
           aria-label="Open menu"
-          className="-ml-1 mt-1 rounded-full p-2 text-gray-500 hover:bg-gray-100 md:hidden"
+          className="-ml-1  rounded-full p-2 text-gray-500 hover:bg-gray-100 md:hidden"
         >
-          <Menu className="h-5 w-5" />
+          < PanelLeftOpen className="h-5 w-5" />
         </button>
         <div className="min-w-0">
           <h1 className="flex items-center gap-2 text-xl font-bold tracking-tight text-gray-900 sm:text-2xl md:text-3xl">
@@ -108,11 +108,11 @@ function StudentHeader({ onMenuClick }: StudentHeaderProps) {
       <div className="flex shrink-0 items-center gap-2">
         <button
           onClick={() => window.dispatchEvent(new Event("open-ai-tutor"))}
-          className="hidden items-center gap-1.5 rounded-full bg-violet-100 px-3 py-2 text-violet-700 hover:bg-violet-200 sm:inline-flex lg:hidden"
+          className="flex items-center gap-1.5 rounded-full bg-violet-100 px-3 py-2 text-violet-700 hover:bg-violet-200 sm:inline-flex lg:hidden"
           aria-label="Open AI tutor"
         >
           <Sparkles className="h-4 w-4" />
-          <span className="text-xs font-medium">AI Tutor</span>
+          <span className="text-xs  font-medium">AI Tutor</span>
         </button>
 
         <button className="relative grid h-10 w-10 shrink-0 place-items-center rounded-full bg-gray-100 hover:bg-gray-200">
