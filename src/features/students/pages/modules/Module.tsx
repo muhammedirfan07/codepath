@@ -12,7 +12,8 @@ import StudentHeader from "../../components/StudentHeader";
 import StudentSidebar from "../../components/StudentSidebar";
 import AiAssistant from "../../components/AiAssistant";
 import ModuleCard from "../../components/ModuleCards";
-import { useNavigate } from "react-router-dom";
+import { useAsyncError, useNavigate } from "react-router-dom";
+import ModuleCardShadow from "../../../../ui/ModuleCardShadow";
 
 const MODULES = [
   {
@@ -92,6 +93,7 @@ const MODULES = [
 
 function Module() {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const [isloading,setIsLoading]=useState(true)
   const navigate = useNavigate();
   return (
     <>
@@ -115,7 +117,8 @@ function Module() {
                 </p>
               </div>
               <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-                {MODULES.map((m) => (
+                { !isloading? Array.from({ length: 6 }).map((_, i) => <ModuleCardShadow key={i} />)
+                :MODULES.map((m) => (
                   <ModuleCard
                     key={m.id}
                     id={m.id}

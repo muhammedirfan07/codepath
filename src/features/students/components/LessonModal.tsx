@@ -20,12 +20,12 @@ interface LessonModalProps {
   onNext: () => void;
 }
 
-export default function LessonModal({
+const LessonModal=({
   lesson,
   fullPageHref,
   onClose,
   onNext,
-}: LessonModalProps) {
+}: LessonModalProps)=> {
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
@@ -178,3 +178,4 @@ export default function LessonModal({
     </div>
   );
 }
+export default LessonModal

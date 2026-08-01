@@ -5,10 +5,22 @@ import { Link } from "react-router-dom";
 type Accent = "sky" | "amber" | "success" | "violet";
 
 const ACCENT_STYLES: Record<Accent, { card: string; icon: string }> = {
-  sky: { card: "border-sky/20 bg-sky/10 hover:shadow-sky/10", icon: "bg-sky/15 text-sky" },
-  amber: { card: "border-amber/20 bg-amber/10 hover:shadow-amber/10", icon: "bg-amber/15 text-amber" },
-  success: { card: "border-success/20 bg-success/10 hover:shadow-success/10", icon: "bg-success/15 text-success" },
-  violet: { card: "border-violet/20 bg-violet/10 hover:shadow-violet/10", icon: "bg-violet/15 text-violet" },
+  sky: {
+    card: " bg-gradient-to-br from-sky-500/20 to-cyan-500/10 ",
+    icon: "bg-sky/15 text-sky",
+  },
+  amber: {
+    card: " bg-gradient-to-br from-amber-500/20 to-orange-500/10 ",
+    icon: "bg-amber/15 text-amber",
+  },
+  success: {
+    card: " bg-gradient-to-br from-emerald-500/20 to-green-500/10 ",
+    icon: "bg-success/15 text-success",
+  },
+  violet: {
+    card: " bg-gradient-to-br from-violet-500/20 to-fuchsia-500/10 ",
+    icon: "bg-violet/15 text-violet",
+  },
 };
 
 interface ModuleCardProps {
@@ -23,7 +35,7 @@ interface ModuleCardProps {
   isPro?: boolean;
 }
 
-export default function ModuleCard({
+const ModuleCard =({
   id,
   icon: Icon,
   accent,
@@ -33,13 +45,13 @@ export default function ModuleCard({
   doneCount,
   hours,
   isPro,
-}: ModuleCardProps) {
+}: ModuleCardProps) =>{
   const styles = ACCENT_STYLES[accent];
   const progress = lessonsCount ? Math.round((doneCount / lessonsCount) * 100) : 0;
 
   return (
     <div
-      className={`flex flex-col justify-between rounded-2xl border p-5 transition duration-300 hover:-translate-y-0.5 hover:shadow-lg ${styles.card}`}
+      className={`flex flex-col justify-between rounded-xl border text-card-foreground shadow group relative p-4 overflow-hidden border-border/60 transition duration-300 hover:-translate-y-0.5 hover:shadow-lg ${styles.card}`}
     >
       <div>
         <div className="flex items-start justify-between">
@@ -102,3 +114,4 @@ export default function ModuleCard({
     </div>
   );
 }
+export default ModuleCard

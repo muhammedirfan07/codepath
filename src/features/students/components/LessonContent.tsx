@@ -1,7 +1,7 @@
 import { CheckCircle2, History, Share2 } from "lucide-react";
 import type { LessonDetail } from "./LessonModal";
 
-export default function LessonContent({ lesson }: { lesson: LessonDetail }) {
+const LessonContent=({ lesson }: { lesson: LessonDetail })=> {
   return (
     <>
       <h2 className="text-xl font-bold text-foreground">{lesson.title}</h2>
@@ -78,3 +78,4 @@ export default function LessonContent({ lesson }: { lesson: LessonDetail }) {
     </>
   );
 }
+export default LessonContent
