@@ -14,6 +14,7 @@ import {
   Bell,
   X,
 } from "lucide-react";
+import logo1 from "../../../assets/LOGOcopy.png"
 import { Link, useLocation } from "react-router-dom";
 
 type NavItem = {
@@ -65,7 +66,7 @@ function StudentSidebar({ mobileOpen, onClose }: StudentSidebarProps) {
               <Link
                 to={item.href}
                 onClick={onClose}
-                className={`flex h-10 items-center gap-3 rounded-full px-3 text-sm font-medium transition-all ${
+                className={`flex h-10 items-center gap-3 rounded-full px-3 text-sm mb-1 font-medium transition-all ${
                   active
                     ? "bg-gradient-to-br from-violet-600 to-purple-700 text-white shadow-md"
                     : "text-gray-500 hover:bg-gray-100 hover:text-gray-900"
@@ -94,9 +95,9 @@ function StudentSidebar({ mobileOpen, onClose }: StudentSidebarProps) {
     <div className="flex h-full flex-col bg-white">
       {/* Logo / brand */}
       <div className="flex items-center justify-between px-4 py-5">
-        <Link to="/" className="flex items-center gap-3">
-          <div className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-violet-600 to-purple-700 text-sm font-bold text-white shadow-sm">
-            CP
+        <Link to="/" className="flex items-center gap-1">
+          <div className="grid h-10 w-10 shrink-0 place-items-center rounded-xl text-sm font-bold text-violet-600 ">
+           <img className="w-full bg-cover" src={logo1} alt="C" />
           </div>
           <div className="flex min-w-0 flex-col">
             <span className="truncate text-base font-semibold leading-tight text-gray-900">
