@@ -11,7 +11,7 @@ import {
 import StudentHeader from "../../components/StudentHeader";
 import StudentSidebar from "../../components/StudentSidebar";
 import AiAssistant from "../../components/AiAssistant";
-import ModuleCard from "../../components/ModuleCards";
+import ModuleCard from "../../components/modules/ModuleCards";
 import { useAsyncError, useNavigate } from "react-router-dom";
 import ModuleCardShadow from "../../../../ui/ModuleCardShadow";
 

@@ -3,10 +3,10 @@ import StudentHeader from '../../components/StudentHeader'
 import StudentSidebar from '../../components/StudentSidebar'
 import AiAssistant from '../../components/AiAssistant'
 
-function Documnetation() {
+function Quizzes() {
      const [mobileNavOpen, setMobileNavOpen] = useState(false);
   return (
-  <>
+   <>
       <div className="flex min-h-screen w-full">
         <StudentSidebar
           mobileOpen={mobileNavOpen}
@@ -20,7 +20,6 @@ function Documnetation() {
       </div>
     </>
   );
-  
 }
 
-export default Documnetation
+export default Quizzes

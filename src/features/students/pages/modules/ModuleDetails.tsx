@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Award, Clock, Play, Share2, Star } from "lucide-react";
-import LessonModal, { type LessonDetail } from "../../components/LessonModal";
+import LessonModal, { type LessonDetail } from "../../components/modules/LessonModal";
 import { Link } from "react-router-dom";
 import StudentHeader from "../../components/StudentHeader";
 import StudentSidebar from "../../components/StudentSidebar";

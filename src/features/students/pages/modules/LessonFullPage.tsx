@@ -1,6 +1,6 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import LessonContent from "../../components/LessonContent";
-import type { LessonDetail } from "../../components/LessonModal";
+import LessonContent from "../../components/modules/LessonContent";
+import type { LessonDetail } from "../../components/modules/LessonModal";
 
 interface LessonFullPageState {
   lesson: LessonDetail;

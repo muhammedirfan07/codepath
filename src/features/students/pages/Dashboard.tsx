@@ -2,13 +2,13 @@ import { useState } from "react";
 import StudentHeader from "../components/StudentHeader";
 import StudentSidebar from "../components/StudentSidebar";
 import AiAssistant from "../components/AiAssistant";
-import ContinueLearnig from "../components/ContinueLearnig";
-import DailyQuestion from "../components/DailyQuestion";
-import RecommentCourses from "../components/RecommentCourses";
-import ProfileCard from "../components/ProfileCard";
-import WeeklyStreakCard from "../components/WeeklyStreakCard";
-import CoursesCount from "../components/CoursesCount";
-import WeeklyWatchTime from "../components/WeeklyWatchTime";
+import ContinueLearnig from "../components/dashboard/ContinueLearnig";
+import DailyQuestion from "../components/dashboard/DailyQuestion";
+import RecommentCourses from "../components/dashboard/RecommentCourses";
+import ProfileCard from "../components/dashboard/ProfileCard";
+import WeeklyStreakCard from "../components/dashboard/WeeklyStreakCard";
+import CoursesCount from "../components/dashboard/CoursesCount";
+import WeeklyWatchTime from "../components/dashboard/WeeklyWatchTime";
 
 
 function Dashboard() {
