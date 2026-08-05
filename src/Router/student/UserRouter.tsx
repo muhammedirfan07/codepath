@@ -11,7 +11,8 @@ import Quizzes from "../../features/students/pages/Quize/Quizzes";
 import MentorDetailPage from "../../features/students/pages/FIndMentor/MentorDetailPage";
 import Message from "../../features/students/pages/chat/Message";
 import VideoSessionPage from "../../features/students/pages/chat/VideoSessionPage";
-VideoSessionPage
+import Mybooking from "../../features/students/pages/MyBookings/Mybooking";
+
 
 const UserRouter = (
   <>
@@ -27,6 +28,7 @@ const UserRouter = (
     <Route path="/student/docs" element={< Documnetation />} />
     <Route path="/student/chats" element={< Message />} />
     <Route path="/student/chats/:chatId" element={< VideoSessionPage />} />
+    <Route path="/student/bookings" element={< Mybooking />} />
   </>
 );
 

@@ -24,15 +24,12 @@ type NavItem = {
   badge?: string;
 };
 
-const learnNav: NavItem[] = [
-  { title: "Dashboard", href: "/student/dashboard", icon: LayoutDashboard },
-  { title: "Modules", href: "/student/modules", icon: BookOpen },
-  { title: "Codeground", href: "/student/codeground", icon: Code2 },
-  { title: "Quizzes", href: "/student/quizzes", icon: HelpCircle },
-  { title: "Documentation", href: "/student/docs", icon: Library },
-  { title: "Find mentors", href: "/student/mentors", icon: Users },
-  { title: "My bookings", href: "/student/bookings", icon: CalendarClock },
-  { title: "Messages", href: "/student/chats", icon: MessagesSquare, badge: "3" },
+const MentorNav: NavItem[] = [
+  { title: "Dashboard", href: "/mentor/dashboard", icon: LayoutDashboard },
+  { title: "Booking", href: "/student/modules", icon: BookOpen },
+  { title: "Schedule", href: "/student/codeground", icon: Code2 },
+  { title: "Chats", href: "/student/quizzes", icon: HelpCircle },
+  
 ];
 
 const accountNav: NavItem[] = [
@@ -41,12 +38,12 @@ const accountNav: NavItem[] = [
   { title: "Settings", href: "/student/settings", icon: Settings },
 ];
 
-interface StudentSidebarProps {
+interface MentorSidebarProps {
   mobileOpen: boolean;
   onClose: () => void;
 }
 
-function StudentSidebar({ mobileOpen, onClose }: StudentSidebarProps) {
+function MentorSidebar({ mobileOpen, onClose }:MentorSidebarProps) {
   const location = useLocation();
 
   const isActive = (href: string) =>
@@ -103,7 +100,7 @@ function StudentSidebar({ mobileOpen, onClose }: StudentSidebarProps) {
               CodePath
             </span>
             <span className="mt-0.5 text-[10px] font-medium uppercase tracking-[0.14em] text-gray-400">
-              Learner portal
+              Mentor portal
             </span>
           </div>
         </Link>
@@ -119,7 +116,7 @@ function StudentSidebar({ mobileOpen, onClose }: StudentSidebarProps) {
 
       {/* Nav */}
       <div className="flex-1 overflow-y-auto px-2">
-        {renderGroup("Learn", learnNav)}
+        {renderGroup("Mentor", MentorNav)}
         {renderGroup("Account", accountNav)}
       </div>
 
@@ -137,7 +134,7 @@ function StudentSidebar({ mobileOpen, onClose }: StudentSidebarProps) {
             <span className="truncate text-sm font-semibold text-gray-900">
               John Doe
             </span>
-            <span className="truncate text-[11px] text-gray-500">Pro learner</span>
+            <span className="truncate text-[11px] text-gray-500">Pro Mentor</span>
           </div>
           <Bell className="h-4 w-4 shrink-0 text-gray-400" />
         </Link>
@@ -179,4 +176,4 @@ function StudentSidebar({ mobileOpen, onClose }: StudentSidebarProps) {
   );
 }
 
-export default StudentSidebar;
+export default MentorSidebar;
