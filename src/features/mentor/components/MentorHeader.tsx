@@ -3,51 +3,35 @@ import { Bell,  PanelLeftOpen, Sparkles } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
 const ROUTE_HEADINGS: Record<string, { title: string; subtitle: string }> = {
-  "/student/dashboard": {
+  "/mentor/dashboard": {
     title: "Dashboard",
     subtitle: "Here's what's happening with your learning today",
   },
-  "/student/profile": {
+  "/mentor/profile": {
     title: "Profile",
     subtitle: "Manage your personal details and achievements",
   },
-  "/student/settings": {
+  "/mentor/settings": {
     title: "Settings",
     subtitle: "Customize your account and preferences",
   },
-  "/student/premium": {
+  "/mentor/premium": {
     title: "Premium",
     subtitle: "Unlock advanced features and content",
   },
-  "/student/bookings": {
+  "/mentor/bookings": {
     title: "My Bookings",
     subtitle: "View and manage your mentor sessions",
   },
-  "/student/booking": {
+  "/mentor/booking": {
     title: "Book a Session",
     subtitle: "Schedule time with a mentor",
   },
-  "/student/modules": {
+  "/mentor/modules": {
     title: "Modules",
     subtitle: "Browse your learning modules and lessons",
   },
-  "/student/codeground": {
-    title: "Codeground",
-    subtitle: "Practice coding problems and test your skills",
-  },
-  "/student/quizzes": {
-    title: "Quizzes",
-    subtitle: "Test your knowledge and track progress",
-  },
-  "/student/docs": {
-    title: "Documentation",
-    subtitle: "Browse language guides and references",
-  },
-  "/student/mentors": {
-    title: "Find Mentors",
-    subtitle: "Connect with experienced mentors",
-  },
-  "/student/chats": {
+  "/mentor/chats": {
     title: "Messages",
     subtitle: "Chat with your mentors and peers",
   },
@@ -56,7 +40,7 @@ const ROUTE_HEADINGS: Record<string, { title: string; subtitle: string }> = {
 function getHeading(path: string) {
   return (
     ROUTE_HEADINGS[path] ?? {
-      title: "Hey, puchuu",
+      title: "Hey,Luffy",
       subtitle: "Here's what's happening with your learning today",
     }
   );

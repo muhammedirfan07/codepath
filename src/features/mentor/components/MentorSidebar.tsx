@@ -26,16 +26,16 @@ type NavItem = {
 
 const MentorNav: NavItem[] = [
   { title: "Dashboard", href: "/mentor/dashboard", icon: LayoutDashboard },
-  { title: "Booking", href: "/student/modules", icon: BookOpen },
-  { title: "Schedule", href: "/student/codeground", icon: Code2 },
-  { title: "Chats", href: "/student/quizzes", icon: HelpCircle },
+  { title: "Booking", href: "/mentor/modules", icon: BookOpen },
+  { title: "Schedule", href: "/mentor/codeground", icon: Code2 },
+  { title: "Chats", href: "/mentor/quizzes", icon: HelpCircle },
   
 ];
 
 const accountNav: NavItem[] = [
-  { title: "Premium", href: "/student/premium", icon: Crown },
-  { title: "Profile", href: "/student/profile", icon: UserCircle },
-  { title: "Settings", href: "/student/settings", icon: Settings },
+  { title: "Premium", href: "/mentor/premium", icon: Crown },
+  { title: "Profile", href: "/mentor/profile", icon: UserCircle },
+  { title: "Settings", href: "/mentor/settings", icon: Settings },
 ];
 
 interface MentorSidebarProps {
@@ -62,9 +62,9 @@ function MentorSidebar({ mobileOpen, onClose }:MentorSidebarProps) {
               <Link
                 to={item.href}
                 onClick={onClose}
-                className={`flex h-10 items-center gap-3 rounded-full px-3 text-sm mb-1 font-medium transition-all ${
+                className={`flex h-10 items-center gap-3 rounded-md px-3 text-sm mb-1 font-medium transition-all ${
                   active
-                    ? "bg-gradient-to-br from-violet-600 to-purple-700 text-white shadow-md"
+                    ? "bg-gradient-to-br from-cyan-700 to-blue-400 text-white shadow-md"
                     : "text-gray-500 hover:bg-gray-100 hover:text-gray-900"
                 }`}
               >
