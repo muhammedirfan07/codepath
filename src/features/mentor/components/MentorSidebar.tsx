@@ -1,20 +1,17 @@
 import React from "react";
 import {
   LayoutDashboard,
-  BookOpen,
-  Code2,
-  HelpCircle,
-  Library,
-  Users,
+  CalendarCheck,
   CalendarClock,
-  MessagesSquare,
-  Crown,
-  UserCircle,
+  GraduationCap,
+  MessageSquare,
+  Wallet,
+  UserRound,
   Settings,
   Bell,
   X,
 } from "lucide-react";
-import logo1 from "../../../assets/LOGOcopy.png"
+import logo1 from "../../../assets/mentorLogo.png"
 import { Link, useLocation } from "react-router-dom";
 
 type NavItem = {
@@ -25,17 +22,17 @@ type NavItem = {
 };
 
 const MentorNav: NavItem[] = [
-  { title: "Dashboard", href: "/mentor/dashboard", icon: LayoutDashboard },
-  { title: "Booking", href: "/mentor/modules", icon: BookOpen },
-  { title: "Schedule", href: "/mentor/codeground", icon: Code2 },
-  { title: "Chats", href: "/mentor/quizzes", icon: HelpCircle },
-  
+  { href: "/mentor/dashboard", title: "Dashboard", icon: LayoutDashboard },
+  { href: "/mentor/bookings", title: "Bookings", icon: CalendarCheck },
+  { href: "/mentor/schedule", title: "Schedule", icon: CalendarClock },
+  { href: "/mentor/students", title: "Students", icon: GraduationCap },
+  { href: "/mentor/chats", title: "Chats", icon: MessageSquare, badge: "2" },
 ];
 
 const accountNav: NavItem[] = [
-  { title: "Premium", href: "/mentor/premium", icon: Crown },
-  { title: "Profile", href: "/mentor/profile", icon: UserCircle },
-  { title: "Settings", href: "/mentor/settings", icon: Settings },
+{ href: "/mentor/payments", title: "Payments", icon: Wallet },
+  { href: "/mentor/profile", title: "Profile", icon: UserRound },
+  { href: "/mentor/settings", title: "Settings", icon: Settings },
 ];
 
 interface MentorSidebarProps {
@@ -64,8 +61,8 @@ function MentorSidebar({ mobileOpen, onClose }:MentorSidebarProps) {
                 onClick={onClose}
                 className={`flex h-10 items-center gap-3 rounded-md px-3 text-sm mb-1 font-medium transition-all ${
                   active
-                    ? "bg-gradient-to-br from-cyan-700 to-blue-400 text-white shadow-md"
-                    : "text-gray-500 hover:bg-gray-100 hover:text-gray-900"
+                    ? "gradient-orange text-white shadow-md hover:text-white data-[active=true]:bg-transparent data-[active=true]:text-white"
+                  : "text-muted-foreground hover:bg-secondary hover:text-foreground"
                 }`}
               >
                 <item.icon className="h-[18px] w-[18px] shrink-0" />
@@ -127,9 +124,9 @@ function MentorSidebar({ mobileOpen, onClose }:MentorSidebarProps) {
           onClick={onClose}
           className="flex items-center gap-3 rounded-2xl border border-gray-200 bg-white px-3 py-2.5 shadow-sm transition-colors hover:bg-gray-50"
         >
-          <div className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-gradient-to-br from-violet-600 to-purple-700 text-xs font-semibold text-white">
-            JD
-          </div>
+          <div className="flex size-9 items-center justify-center rounded-full bg-amber text-xs font-bold text-amber-foreground">
+          AC
+        </div>
           <div className="flex min-w-0 flex-1 flex-col">
             <span className="truncate text-sm font-semibold text-gray-900">
               John Doe
