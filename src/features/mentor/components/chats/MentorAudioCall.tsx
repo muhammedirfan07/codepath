@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Mic, MicOff, Video, VideoOff, PhoneOff, X } from "lucide-react";
 
-export interface AudioCallModalProps {
+export interface MentorAudioCallModalProps {
   open: boolean;
   onClose: () => void;
   name: string;
@@ -17,13 +17,13 @@ function formatDuration(totalSeconds: number): string {
   return `${m}:${s}`;
 }
 
-export default function AudioCallModal({
+export default function MentorAudioCall({
   open,
   onClose,
   name,
   initials,
   onSwitchToVideo,
-}: AudioCallModalProps) {
+}: MentorAudioCallModalProps) {
   const [seconds, setSeconds] = useState(0);
   const [micOn, setMicOn] = useState(true);
   const [camOn, setCamOn] = useState(false);

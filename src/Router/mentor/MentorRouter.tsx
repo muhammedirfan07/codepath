@@ -1,12 +1,16 @@
 import { Route, Router } from "react-router-dom";
 import Dashboard from "../../features/mentor/pages/Dashboard";
 import Schedule from "../../features/mentor/pages/Schedule";
-import MentorLayout from "../../features/mentor/pages/MentorLayout";
+import MentorLayout from "../../features/mentor/pages/MentorLayout"
+import MentorChat from "../../features/mentor/pages/chats/MentorChat";
+import MentorSessionPage from "../../features/mentor/pages/chats/MentorSessionPage";
 
 const MentorRouter =(
    <Route element={<MentorLayout/>} >
         <Route path="/mentor/dashboard" element={<Dashboard/>}/>
         <Route path="/mentor/schedule" element={<Schedule/>}/>
+        <Route path="/mentor/chats" element={<MentorChat/>}/>
+        <Route path="/mentor/chats/:chatsId" element={<MentorSessionPage/>}/>
         
    </Route>
 )
