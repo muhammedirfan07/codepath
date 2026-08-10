@@ -8,7 +8,8 @@ import UserRoutes from './Router/student/UserRouter'
 import MentorRouter from './Router/mentor/MentorRouter'
 import AdminRouter from './Router/admin/AdminRouter'
 import Eorro404page from './common/Eorro404page'
-
+import OtpLoginPage from './features/auth/OtpLoginPage'
+OtpLoginPage
 
 function App() {
  
@@ -19,6 +20,7 @@ function App() {
       <Route path='/' element={<LandingPage/>}/>
       <Route path='/login' element={<Loginn/>}/>
       <Route path='/register' element={<Register/>}/>
+      <Route path='/otp' element={<OtpLoginPage/>}/>
 
       {UserRoutes}
       {MentorRouter}

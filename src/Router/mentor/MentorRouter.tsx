@@ -4,6 +4,9 @@ import Schedule from "../../features/mentor/pages/Schedule";
 import MentorLayout from "../../features/mentor/pages/MentorLayout"
 import MentorChat from "../../features/mentor/pages/chats/MentorChat";
 import MentorSessionPage from "../../features/mentor/pages/chats/MentorSessionPage";
+import MentorSessionBookingPage from "../../features/mentor/pages/MentorSessionBookingPage";
+
+
 
 const MentorRouter =(
    <Route element={<MentorLayout/>} >
@@ -11,6 +14,7 @@ const MentorRouter =(
         <Route path="/mentor/schedule" element={<Schedule/>}/>
         <Route path="/mentor/chats" element={<MentorChat/>}/>
         <Route path="/mentor/chats/:chatsId" element={<MentorSessionPage/>}/>
+        <Route path="/mentor/bookings" element={<MentorSessionBookingPage/>}/>
         
    </Route>
 )
