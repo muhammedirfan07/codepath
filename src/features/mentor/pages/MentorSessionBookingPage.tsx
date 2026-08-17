@@ -247,14 +247,6 @@ function MentorSessionBookingPage() {
       <div className="flex min-w-0 flex-1 flex-col">
         <MentorHeader onMenuClick={() => setMobileNavOpen(true)} />
         <main className="flex-1 overflow-x-hidden bg-background p-3 md:p-5">
-          <div className="mb-6">
-            <h1 className="font-display text-2xl font-bold text-foreground md:text-3xl">
-              Bookings
-            </h1>
-            <p className="mt-1 text-sm text-muted-foreground">
-              Confirm requests and join your sessions
-            </p>
-          </div>
 
           <div className="mb-5 grid grid-cols-1 gap-4 sm:grid-cols-3">
             <StatCard

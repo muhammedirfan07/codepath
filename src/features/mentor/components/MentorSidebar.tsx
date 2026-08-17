@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   LayoutDashboard,
   CalendarCheck,
@@ -10,9 +10,11 @@ import {
   Settings,
   Bell,
   X,
+  Sparkles,
 } from "lucide-react";
 import logo1 from "../../../assets/mentorLogo.png"
 import { Link, useLocation } from "react-router-dom";
+import BoostProfileModal from "./Boostprofilemodal ";
 
 type NavItem = {
   title: string;
@@ -42,6 +44,7 @@ interface MentorSidebarProps {
 
 function MentorSidebar({ mobileOpen, onClose }:MentorSidebarProps) {
   const location = useLocation();
+  const [boostModalOpen, setBoostModalOpen] = useState(false);
 
   const isActive = (href: string) =>
     location.pathname === href || location.pathname.startsWith(href + "/");
@@ -117,6 +120,25 @@ function MentorSidebar({ mobileOpen, onClose }:MentorSidebarProps) {
         {renderGroup("Account", accountNav)}
       </div>
 
+      {/* Boost your profile card */}
+      <div className="mx-3 mb-3 rounded-2xl border border-amber-100 bg-gradient-to-br from-emerald-50 via-white to-amber-50 p-4">
+        <div className="flex items-center gap-2">
+          <Sparkles className="h-4 w-4 text-amber-500" />
+          <span className="text-sm font-semibold text-gray-900">
+            Boost your profile
+          </span>
+        </div>
+        <p className="mt-1.5 text-xs leading-relaxed text-gray-500">
+          Mentors with open weekly slots get up to 3× more bookings.
+        </p>
+        <button
+          onClick={() => setBoostModalOpen(true)}
+          className="mt-3 flex h-9 w-full items-center justify-center rounded-lg bg-emerald-600 text-xs font-semibold text-white shadow-sm transition-colors hover:bg-emerald-700"
+        >
+          Add availability
+        </button>
+      </div>
+
       {/* Footer / profile */}
       <div className="p-3">
         <Link
@@ -169,6 +191,12 @@ function MentorSidebar({ mobileOpen, onClose }:MentorSidebarProps) {
           {sidebarBody}
         </div>
       </div>
+
+      {/* Boost profile payment modal */}
+      <BoostProfileModal
+        open={boostModalOpen}
+        onClose={() => setBoostModalOpen(false)}
+      />
     </>
   );
 }
