@@ -74,184 +74,32 @@ const PAST: Booking[] = [
   },
 ];
 
-// ---- Status badge -------------------------------------------------------------
-function StatusBadge({ status }: { status: BookingStatus }) {
-  const styles: Record<BookingStatus, string> = {
-    confirmed: "border-border bg-transparent text-foreground",
-    pending: "border-warning/40 bg-warning/10 text-warning-foreground",
-    completed: "border-border bg-muted text-muted-foreground",
-  };
-  const label: Record<BookingStatus, string> = {
-    confirmed: "Confirmed",
-    pending: "Pending",
-    completed: "Completed",
-  };
-  return (
-    <span
-      className={`shrink-0 rounded-full border px-3 py-1 text-xs font-semibold sm:text-sm ${styles[status]}`}
-    >
-      {label[status]}
-    </span>
-  );
+// Turns a mentor name into the same slug/id ChatPanel uses for its chats
+// (e.g. "Ava Chen" -> "ava-chen"). Keep this in sync with your real chat ids.
+function toChatId(mentorName: string): string {
+  return mentorName.trim().toLowerCase().replace(/\s+/g, "-");
 }
 
-// ---- Cancel confirmation modal ------------------------------------------------
-interface CancelModalProps {
-  booking: Booking;
-  isSubmitting: boolean;
-  onConfirm: () => void;
-  onClose: () => void;
-}
+const STATUS_STYLES: Record<BookingStatus, string> = {
+  confirmed: "border-border bg-transparent text-foreground",
+  pending: "border-warning/40 bg-warning/10 text-warning-foreground",
+  completed: "border-border bg-muted text-muted-foreground",
+};
 
-function CancelBookingModal({
-  booking,
-  isSubmitting,
-  onConfirm,
-  onClose,
-}: CancelModalProps) {
-  return (
-    <div
-      className="fixed inset-0 z-50 flex items-end justify-center bg-black/50 p-0 backdrop-blur-sm sm:items-center sm:p-4"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="cancel-booking-title"
-      onClick={onClose}
-    >
-      <div
-        className="w-full max-w-full rounded-t-2xl border border-border bg-card p-5 shadow-xl sm:max-w-md sm:rounded-2xl sm:p-6"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className="flex items-start justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-destructive/10 text-destructive">
-              <AlertTriangle className="h-5 w-5" />
-            </span>
-            <h2
-              id="cancel-booking-title"
-              className="font-display text-lg font-semibold text-foreground"
-            >
-              Cancel booking?
-            </h2>
-          </div>
-          <button
-            type="button"
-            onClick={onClose}
-            aria-label="Close"
-            className="shrink-0 cursor-pointer rounded-full p-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-          >
-            <X className="h-5 w-5" />
-          </button>
-        </div>
+const STATUS_LABEL: Record<BookingStatus, string> = {
+  confirmed: "Confirmed",
+  pending: "Pending",
+  completed: "Completed",
+};
 
-        <p className="mt-4 text-sm text-muted-foreground sm:text-base">
-          Are you sure you want to cancel your session with{" "}
-          <span className="font-medium text-foreground">
-            {booking.mentorName}
-          </span>{" "}
-          on{" "}
-          <span className="font-medium text-foreground">
-            {booking.dateLabel}
-          </span>
-          ? This action can&apos;t be undone.
-        </p>
-
-        <div className="mt-6 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end sm:gap-3">
-          <button
-            type="button"
-            onClick={onClose}
-            disabled={isSubmitting}
-            className="w-full cursor-pointer rounded-full border border-input bg-secondary px-4 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-muted disabled:opacity-50 sm:w-auto"
-          >
-            Keep booking
-          </button>
-          <button
-            type="button"
-            onClick={onConfirm}
-            disabled={isSubmitting}
-            className="w-full cursor-pointer rounded-full bg-destructive px-4 py-2.5 text-sm font-medium text-destructive-foreground transition-opacity hover:opacity-90 disabled:opacity-50 sm:w-auto"
-          >
-            {isSubmitting ? "Cancelling..." : "Yes, cancel"}
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// ---- Booking row -------------------------------------------------------------
-interface BookingRowProps {
-  booking: Booking;
-  onChat: (booking: Booking) => void;
-  onVideoCall: (booking: Booking) => void;
-  onCancel: (booking: Booking) => void;
-}
-
-function BookingRow({ booking, onChat, onVideoCall, onCancel }: BookingRowProps) {
-  return (
-    <div className="flex flex-col gap-4 px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:gap-3 sm:px-6 sm:py-5">
-      <div className="min-w-0">
-        <p className="truncate font-display font-semibold text-foreground">
-          {booking.mentorName}
-        </p>
-        <p className="truncate text-sm text-muted-foreground">
-          {booking.dateLabel} · {booking.topic}
-        </p>
-      </div>
-
-      <div className="flex flex-wrap items-center gap-2 sm:shrink-0">
-        <StatusBadge status={booking.status} />
-
-        <button
-          type="button"
-          onClick={() => onChat(booking)}
-          className="flex items-center gap-1.5 cursor-pointer rounded-full border border-input bg-secondary px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-muted"
-        >
-          <MessageSquare className="h-4 w-4" />
-          Chat
-        </button>
-
-        {booking.status !== "pending" && (
-          <button
-            type="button"
-            onClick={() => onVideoCall(booking)}
-            className="flex items-center cursor-pointer gap-1.5 rounded-full bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
-          >
-            <Video className="h-4 w-4" />
-            Video call
-          </button>
-        )}
-
-        {booking.status === "pending" && (
-          <button
-            type="button"
-            onClick={() => onCancel(booking)}
-            className="flex items-center cursor-pointer gap-1.5 rounded-full border border-destructive/40 bg-destructive/10 px-4 py-2 text-sm font-medium text-destructive transition-colors hover:bg-destructive/20"
-          >
-            <X className="h-4 w-4" />
-            Cancel
-          </button>
-        )}
-      </div>
-    </div>
-  );
-}
-
-// ---- Empty state -------------------------------------------------------------
-function EmptyBookings({ tab }: { tab: TabKey }) {
-  const copy: Record<TabKey, string> = {
-    upcoming: "No upcoming sessions yet.",
-    pending: "No pending requests right now.",
-    past: "No past sessions yet.",
-  };
-  return (
-    <p className="px-6 py-10 text-center text-sm text-muted-foreground">
-      {copy[tab]}
-    </p>
-  );
-}
+const EMPTY_COPY: Record<TabKey, string> = {
+  upcoming: "No upcoming sessions yet.",
+  pending: "No pending requests right now.",
+  past: "No past sessions yet.",
+};
 
 // ---- Root ----------------------------------------------------------------
-function MyBookingPanel() {
+export default function MyBookingPanel() {
   const [activeTab, setActiveTab] = useState<TabKey>("upcoming");
   const [pendingBookings, setPendingBookings] = useState<Booking[]>(PENDING);
   const [cancelTarget, setCancelTarget] = useState<Booking | null>(null);
@@ -272,9 +120,14 @@ function MyBookingPanel() {
     [tabs, activeTab]
   );
 
-  const handleChat = (_booking: Booking) => {
-    // Adjust to match your messages route.
-    navigate("/student/chats");
+  const handleChat = (booking: Booking) => {
+    // /student/chats/:chatId is the video-call route, so the chat list/thread
+    // lives at plain /student/chats — pass the mentor via state so ChatPanel
+    // can auto-select the right conversation on mount.
+    const chatId = toChatId(booking.mentorName);
+    navigate("/student/chats", {
+      state: { chatId, name: booking.mentorName, initials: booking.initials },
+    });
   };
 
   const handleVideoCall = (booking: Booking) => {
@@ -310,7 +163,6 @@ function MyBookingPanel() {
 
   return (
     <>
-
       <p className="mt-1 text-muted-foreground">
         Sessions you&apos;ve requested and confirmed.
       </p>
@@ -336,32 +188,140 @@ function MyBookingPanel() {
       {/* List */}
       <div className="mt-6 overflow-hidden rounded-2xl border border-border bg-card">
         {currentBookings.length === 0 ? (
-          <EmptyBookings tab={activeTab} />
+          <p className="px-6 py-10 text-center text-sm text-muted-foreground">
+            {EMPTY_COPY[activeTab]}
+          </p>
         ) : (
           <div className="divide-y divide-border">
             {currentBookings.map((booking) => (
-              <BookingRow
+              <div
                 key={booking.id}
-                booking={booking}
-                onChat={handleChat}
-                onVideoCall={handleVideoCall}
-                onCancel={handleCancelClick}
-              />
+                className="flex flex-col gap-4 px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:gap-3 sm:px-6 sm:py-5"
+              >
+                <div className="min-w-0">
+                  <p className="truncate font-display font-semibold text-foreground">
+                    {booking.mentorName}
+                  </p>
+                  <p className="truncate text-sm text-muted-foreground">
+                    {booking.dateLabel} · {booking.topic}
+                  </p>
+                </div>
+
+                <div className="flex flex-wrap items-center gap-2 sm:shrink-0">
+                  {/* Status badge */}
+                  <span
+                    className={`shrink-0 rounded-full border px-3 py-1 text-xs font-semibold sm:text-sm ${
+                      STATUS_STYLES[booking.status]
+                    }`}
+                  >
+                    {STATUS_LABEL[booking.status]}
+                  </span>
+
+                  <button
+                    type="button"
+                    onClick={() => handleChat(booking)}
+                    className="flex items-center gap-1.5 cursor-pointer rounded-full border border-input bg-secondary px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-muted"
+                  >
+                    <MessageSquare className="h-4 w-4" />
+                    Chat
+                  </button>
+
+                  {booking.status !== "pending" && (
+                    <button
+                      type="button"
+                      onClick={() => handleVideoCall(booking)}
+                      className="flex items-center cursor-pointer gap-1.5 rounded-full bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
+                    >
+                      <Video className="h-4 w-4" />
+                      Video call
+                    </button>
+                  )}
+
+                  {booking.status === "pending" && (
+                    <button
+                      type="button"
+                      onClick={() => handleCancelClick(booking)}
+                      className="flex items-center cursor-pointer gap-1.5 rounded-full border border-destructive/40 bg-destructive/10 px-4 py-2 text-sm font-medium text-destructive transition-colors hover:bg-destructive/20"
+                    >
+                      <X className="h-4 w-4" />
+                      Cancel
+                    </button>
+                  )}
+                </div>
+              </div>
             ))}
           </div>
         )}
       </div>
 
+      {/* Cancel confirmation modal */}
       {cancelTarget && (
-        <CancelBookingModal
-          booking={cancelTarget}
-          isSubmitting={isCancelling}
-          onConfirm={handleConfirmCancel}
-          onClose={handleCloseModal}
-        />
+        <div
+          className="fixed inset-0 z-50 flex items-end justify-center bg-black/50 p-0 backdrop-blur-sm sm:items-center sm:p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="cancel-booking-title"
+          onClick={handleCloseModal}
+        >
+          <div
+            className="w-full max-w-full rounded-t-2xl border border-border bg-card p-5 shadow-xl sm:max-w-md sm:rounded-2xl sm:p-6"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-start justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-destructive/10 text-destructive">
+                  <AlertTriangle className="h-5 w-5" />
+                </span>
+                <h2
+                  id="cancel-booking-title"
+                  className="font-display text-lg font-semibold text-foreground"
+                >
+                  Cancel booking?
+                </h2>
+              </div>
+              <button
+                type="button"
+                onClick={handleCloseModal}
+                aria-label="Close"
+                className="shrink-0 cursor-pointer rounded-full p-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+
+            <p className="mt-4 text-sm text-muted-foreground sm:text-base">
+              Are you sure you want to cancel your session with{" "}
+              <span className="font-medium text-foreground">
+                {cancelTarget.mentorName}
+              </span>{" "}
+              on{" "}
+              <span className="font-medium text-foreground">
+                {cancelTarget.dateLabel}
+              </span>
+              ? This action can&apos;t be undone.
+            </p>
+
+            <div className="mt-6 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end sm:gap-3">
+              <button
+                type="button"
+                onClick={handleCloseModal}
+                disabled={isCancelling}
+                className="w-full cursor-pointer rounded-full border border-input bg-secondary px-4 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-muted disabled:opacity-50 sm:w-auto"
+              >
+                Keep booking
+              </button>
+              <button
+                type="button"
+                onClick={handleConfirmCancel}
+                disabled={isCancelling}
+                className="w-full cursor-pointer rounded-full bg-destructive px-4 py-2.5 text-sm font-medium text-destructive-foreground transition-opacity hover:opacity-90 disabled:opacity-50 sm:w-auto"
+              >
+                {isCancelling ? "Cancelling..." : "Yes, cancel"}
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </>
   );
 }
-
-export default MyBookingPanel;
