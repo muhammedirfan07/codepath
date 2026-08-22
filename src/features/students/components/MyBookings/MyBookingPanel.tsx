@@ -137,7 +137,7 @@ function CancelBookingModal({
             type="button"
             onClick={onClose}
             aria-label="Close"
-            className="shrink-0 rounded-full p-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+            className="shrink-0 cursor-pointer rounded-full p-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
           >
             <X className="h-5 w-5" />
           </button>
@@ -160,7 +160,7 @@ function CancelBookingModal({
             type="button"
             onClick={onClose}
             disabled={isSubmitting}
-            className="w-full rounded-full border border-input bg-secondary px-4 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-muted disabled:opacity-50 sm:w-auto"
+            className="w-full cursor-pointer rounded-full border border-input bg-secondary px-4 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-muted disabled:opacity-50 sm:w-auto"
           >
             Keep booking
           </button>
@@ -168,7 +168,7 @@ function CancelBookingModal({
             type="button"
             onClick={onConfirm}
             disabled={isSubmitting}
-            className="w-full rounded-full bg-destructive px-4 py-2.5 text-sm font-medium text-destructive-foreground transition-opacity hover:opacity-90 disabled:opacity-50 sm:w-auto"
+            className="w-full cursor-pointer rounded-full bg-destructive px-4 py-2.5 text-sm font-medium text-destructive-foreground transition-opacity hover:opacity-90 disabled:opacity-50 sm:w-auto"
           >
             {isSubmitting ? "Cancelling..." : "Yes, cancel"}
           </button>
@@ -204,7 +204,7 @@ function BookingRow({ booking, onChat, onVideoCall, onCancel }: BookingRowProps)
         <button
           type="button"
           onClick={() => onChat(booking)}
-          className="flex items-center gap-1.5 rounded-full border border-input bg-secondary px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-muted"
+          className="flex items-center gap-1.5 cursor-pointer rounded-full border border-input bg-secondary px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-muted"
         >
           <MessageSquare className="h-4 w-4" />
           Chat
@@ -214,7 +214,7 @@ function BookingRow({ booking, onChat, onVideoCall, onCancel }: BookingRowProps)
           <button
             type="button"
             onClick={() => onVideoCall(booking)}
-            className="flex items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
+            className="flex items-center cursor-pointer gap-1.5 rounded-full bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
           >
             <Video className="h-4 w-4" />
             Video call
@@ -225,7 +225,7 @@ function BookingRow({ booking, onChat, onVideoCall, onCancel }: BookingRowProps)
           <button
             type="button"
             onClick={() => onCancel(booking)}
-            className="flex items-center gap-1.5 rounded-full border border-destructive/40 bg-destructive/10 px-4 py-2 text-sm font-medium text-destructive transition-colors hover:bg-destructive/20"
+            className="flex items-center cursor-pointer gap-1.5 rounded-full border border-destructive/40 bg-destructive/10 px-4 py-2 text-sm font-medium text-destructive transition-colors hover:bg-destructive/20"
           >
             <X className="h-4 w-4" />
             Cancel
@@ -274,12 +274,12 @@ function MyBookingPanel() {
 
   const handleChat = (_booking: Booking) => {
     // Adjust to match your messages route.
-    navigate("/messages");
+    navigate("/student/chats");
   };
 
   const handleVideoCall = (booking: Booking) => {
     // Adjust to match your video-session route.
-    navigate(`/messages/call/${booking.id}`, {
+    navigate(`/student/chats/${booking.id}`, {
       state: { name: booking.mentorName, initials: booking.initials },
     });
   };
@@ -310,9 +310,7 @@ function MyBookingPanel() {
 
   return (
     <>
-      <h1 className="font-display text-3xl font-bold text-foreground">
-        My bookings
-      </h1>
+
       <p className="mt-1 text-muted-foreground">
         Sessions you&apos;ve requested and confirmed.
       </p>
@@ -324,7 +322,7 @@ function MyBookingPanel() {
             key={tab.key}
             type="button"
             onClick={() => setActiveTab(tab.key)}
-            className={`shrink-0 rounded-full px-4 py-2 text-sm font-medium transition-colors ${
+            className={`shrink-0 rounded-full px-4 py-2 cursor-pointer text-sm font-medium transition-colors ${
               activeTab === tab.key
                 ? "bg-card text-foreground shadow-sm"
                 : "text-muted-foreground hover:text-foreground"
