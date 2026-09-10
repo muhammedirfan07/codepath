@@ -1,11 +1,10 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { toast } from "sonner";
-import logo from "../../assets/LOGO.png"
+import logo from "../../assets/LOGO.png";
 import { ArrowLeft, Code2, GraduationCap, Sparkles, Star, Users } from "lucide-react";
 import { ThreeDMarquee } from "../../ui/3d-marquee";
 import { cn } from "../../lib/utils";
-
 
 const marqueeImages = [
   "https://assets.aceternity.com/cloudinary_bkp/3d-card.png",
@@ -41,22 +40,35 @@ const marqueeImages = [
   "https://assets.aceternity.com/world-map.webp",
 ];
 
- const RegisterPage = ()=> {
+interface RegisterPayload {
+  name: string;
+  email: string;
+  password: string;
+  role: "learner" | "mentor";
+}
+
+const RegisterPage = () => {
   const nav = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState<"learner" | "mentor">("learner");
 
-
-
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!name || !email || !password) return toast.error("Fill all fields");
+
+    const payload: RegisterPayload = { name, email, password, role };
+    console.log("input data is= ", payload);
+
     toast.success("Account created!");
-    nav(role === "mentor" ? "/mentor/apply" : "/user/dashboard");
-  };
   
+    
+    setName("");
+    setEmail("");
+    setPassword("");
+    setRole("learner");
+  };
 
   const roleTiles: {
     value: "learner" | "mentor";
@@ -69,180 +81,174 @@ const marqueeImages = [
   ];
 
   return (
-   <>
-      <div className="grid min-h-screen w-full lg:grid-cols-2">
-        {/* Left side — 3D marquee */}
-        <div className="relative hidden overflow-hidden bg-gradient-to-br from-violet-600 via-violet-700 to-violet-900 lg:flex lg:flex-col">
-          <div className="absolute inset-0 z-10 bg-gradient-to-br from-violet-700/85 via-violet-800/85 to-violet-950/90" />
-          <ThreeDMarquee
-            className="pointer-events-none absolute inset-0 h-full w-full opacity-60"
-            images={marqueeImages}
-          />
-  
-          {/* Logo */}
-          <div className="relative z-20 flex items-center gap-2 p-12 pb-0">
-            <div className="inline-flex items-center gap-2 rounded-full bg-white py-1.5 pl-1.5 pr-4 backdrop-blur-md ring-1 ring-white/20">
-               <img src={logo} alt="CodePath" className="h-4 w-auto sm:h-7" />
-            </div>
+    <div className="grid min-h-screen w-full lg:grid-cols-2">
+      {/* Left side — 3D marquee */}
+      <div className="relative hidden overflow-hidden bg-gradient-to-br from-violet-600 via-violet-700 to-violet-900 lg:flex lg:flex-col">
+        <div className="absolute inset-0 z-10 bg-gradient-to-br from-violet-700/85 via-violet-800/85 to-violet-950/90" />
+        <ThreeDMarquee
+          className="pointer-events-none absolute inset-0 h-full w-full opacity-60"
+          images={marqueeImages}
+        />
+
+        {/* Logo */}
+        <div className="relative z-20 flex items-center gap-2 p-12 pb-0">
+          <div className="inline-flex items-center gap-2 rounded-full bg-white py-1.5 pl-1.5 pr-4 backdrop-blur-md ring-1 ring-white/20">
+            <img src={logo} alt="CodePath" className="h-4 w-auto sm:h-7" />
           </div>
-  
-          <div className="relative z-20 flex flex-1 flex-col justify-center gap-6 p-12">
-            <div className="inline-flex w-fit items-center gap-1.5 rounded-full bg-white/10 px-3 py-1.5 text-xs font-medium text-white/90 backdrop-blur-md ring-1 ring-white/20">
-              <Sparkles className="h-3.5 w-3.5" />
-              AI mentor matcher included
-            </div>
-            <h2 className="max-w-md font-display text-4xl font-semibold text-white">
-              A learning path that adapts to you.
-            </h2>
-            <p className="max-w-md text-sm text-white/80">
-              Lessons, live code, quizzes and human mentors — all in one focused
-              workspace.
-            </p>
-  
-            <div className="mt-4 max-w-sm rounded-2xl bg-white/10 p-5 backdrop-blur-md ring-1 ring-white/20">
-              <div className="flex gap-1 text-amber-400">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <Star key={i} className="h-4 w-4 fill-current" />
-                ))}
-              </div>
-              <p className="mt-3 text-sm text-white">
-                "The AI matcher paired me with a mentor who'd done the exact
-                career jump I wanted."
-              </p>
-              <div className="mt-3 flex items-center gap-2 text-xs text-white/70">
-                <Users className="h-3.5 w-3.5" />
-                Priya · Frontend engineer
-              </div>
-            </div>
-          </div>
-  
-          <p className="relative z-20 p-12 pt-0 text-xs text-white/50">
-            © 2026 CodePath
-          </p>
         </div>
-  
-        {/* Right side — register form */}
-        <div className="flex items-center justify-center px-6 py-10 ">
-          <div className="w-full max-w-md">
-            <div className="mb-8">
-              <Link
-                to="/"
-                className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
-              >
-                <ArrowLeft className="h-4 w-4" /> Back home
-              </Link>
+
+        <div className="relative z-20 flex flex-1 flex-col justify-center gap-6 p-12">
+          <div className="inline-flex w-fit items-center gap-1.5 rounded-full bg-white/10 px-3 py-1.5 text-xs font-medium text-white/90 backdrop-blur-md ring-1 ring-white/20">
+            <Sparkles className="h-3.5 w-3.5" />
+            AI mentor matcher included
+          </div>
+
+          <h2 className="max-w-md font-display text-4xl font-semibold text-white">
+            A learning path that adapts to you.
+          </h2>
+
+          <p className="max-w-md text-sm text-white/80">
+            Lessons, live code, quizzes and human mentors — all in one focused workspace.
+          </p>
+
+          <div className="mt-4 max-w-sm rounded-2xl bg-white/10 p-5 backdrop-blur-md ring-1 ring-white/20">
+            <div className="flex gap-1 text-amber-400">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <Star key={i} className="h-4 w-4 fill-current" />
+              ))}
             </div>
-            <div className="mb-6 flex items-center gap-2 lg:hidden">
-              <div className="grid h-8 w-8 place-items-center rounded-lg gradient-violet text-primary-foreground">
-                <Code2 className="h-4 w-4" />
-              </div>
-              <span className="font-display text-lg font-semibold">CodePath</span>
-            </div>
-            <h1 className="font-display text-3xl font-semibold">
-              Create your account
-            </h1>
-            <p className="mt-2 text-sm text-muted-foreground">
-              Already have one?{" "}
-              <Link
-                to="/login"
-                className="font-medium text-primary hover:underline"
-              >
-                Log in
-              </Link>
-              .
+            <p className="mt-3 text-sm text-white">
+              "The AI matcher paired me with a mentor who'd done the exact career jump I wanted."
             </p>
-  
-            <form onSubmit={submit} className="mt-8 space-y-4">
-              <div>
-                <label
-                className= "block text-sm font-medium leading-6 text-muted-foreground"
-                >I want to join as</label>
-                <div className="mt-2 grid grid-cols-2 gap-2">
-                  {roleTiles.map(({ value, icon: Icon, label, desc }) => {
-                    const active = role === value;
-                    return (
-                      <button
-                        key={value}
-                        type="button"
-                        onClick={() => setRole(value)}
+            <div className="mt-3 flex items-center gap-2 text-xs text-white/70">
+              <Users className="h-3.5 w-3.5" />
+              Priya · Frontend engineer
+            </div>
+          </div>
+        </div>
+
+        <p className="relative z-20 p-12 pt-0 text-xs text-white/50">© 2026 CodePath</p>
+      </div>
+
+      {/* Right side — register form */}
+      <div className="flex items-center justify-center px-6 py-10">
+        <div className="w-full max-w-md">
+          <div className="mb-8">
+            <Link to="/" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground">
+              <ArrowLeft className="h-4 w-4" /> Back home
+            </Link>
+          </div>
+
+          <div className="mb-6 flex items-center gap-2 lg:hidden">
+            <div className="grid h-8 w-8 place-items-center rounded-lg gradient-violet text-primary-foreground">
+              <Code2 className="h-4 w-4" />
+            </div>
+            <span className="font-display text-lg font-semibold">CodePath</span>
+          </div>
+
+          <h1 className="font-display text-3xl font-semibold">Create your account</h1>
+          <p className="mt-2 text-sm text-muted-foreground">
+            Already have one?{" "}
+            <Link to="/login" className="font-medium text-primary hover:underline">
+              Log in
+            </Link>
+            .
+          </p>
+
+          <form onSubmit={submit} className="mt-8 space-y-4">
+            <div>
+              <label className="block text-sm font-medium leading-6 text-muted-foreground">
+                I want to join as
+              </label>
+              <div className="mt-2 grid grid-cols-2 gap-2">
+                {roleTiles.map(({ value, icon: Icon, label, desc }) => {
+                  const active = role === value;
+                  return (
+                    <button
+                      key={value}
+                      type="button"
+                      onClick={() => setRole(value)}
+                      className={cn(
+                        "flex items-start gap-3 rounded-xl border p-3 text-left transition-all",
+                        active
+                          ? "border-primary bg-primary/5 ring-2 ring-primary/30"
+                          : "border-border hover:border-primary/40"
+                      )}
+                    >
+                      <div
                         className={cn(
-                          "flex items-start gap-3 rounded-xl border p-3 text-left transition-all",
-                          active
-                            ? "border-primary bg-primary/5 ring-2 ring-primary/30"
-                            : "border-border hover:border-primary/40",
+                          "grid h-9 w-9 shrink-0 place-items-center rounded-lg",
+                          active ? "gradient-violet text-primary-foreground" : "bg-muted text-muted-foreground"
                         )}
                       >
-                        <div
-                          className={cn(
-                            "grid h-9 w-9 shrink-0 place-items-center rounded-lg",
-                            active
-                              ? "gradient-violet text-primary-foreground"
-                              : "bg-muted text-muted-foreground",
-                          )}
-                        >
-                          <Icon className="h-4 w-4" />
-                        </div>
-                        <div className="min-w-0">
-                          <div className="text-sm font-semibold">{label}</div>
-                          <div className="truncate text-xs text-muted-foreground">{desc}</div>
-                        </div>
-                      </button>
-                    );
-                  })}
-                </div>
+                        <Icon className="h-4 w-4" />
+                      </div>
+                      <div className="min-w-0">
+                        <div className="text-sm font-semibold">{label}</div>
+                        <div className="truncate text-xs text-muted-foreground">{desc}</div>
+                      </div>
+                    </button>
+                  );
+                })}
               </div>
-              <div>
-                <label
-                 className= "block text-sm font-medium leading-6 text-muted-foreground"
-                 htmlFor="name">Full name</label>
-                <input
-                  className="mt-2 block w-full rounded-xl border border-border bg-background px-4 py-3 text-sm text-foreground shadow-sm transition focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 disabled:cursor-not-allowed disabled:opacity-50"
-                  id="name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  placeholder="Ada Lovelace"
-                />
-              </div>
-              <div>
-                <label
-                 className= "block text-sm font-medium leading-6 text-muted-foreground" 
-                htmlFor="email">Email</label>
-                <input
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium leading-6 text-muted-foreground" htmlFor="name">
+                Full name
+              </label>
+              <input
                 className="mt-2 block w-full rounded-xl border border-border bg-background px-4 py-3 text-sm text-foreground shadow-sm transition focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 disabled:cursor-not-allowed disabled:opacity-50"
-                  id="email"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="you@codepath.dev"
-                />
-              </div>
-              <div>
-                <label
-                 className= "block text-sm font-medium leading-6 text-muted-foreground"
-                 htmlFor="password">Password</label>
-                <input
+                id="name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder=" your name"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium leading-6 text-muted-foreground" htmlFor="email">
+                Email
+              </label>
+              <input
                 className="mt-2 block w-full rounded-xl border border-border bg-background px-4 py-3 text-sm text-foreground shadow-sm transition focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 disabled:cursor-not-allowed disabled:opacity-50"
-                  id="password"
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Min. 8 characters"
-                />
-              </div>
-              <button
-                type="submit"
-                className="inline-flex items-center justify-center rounded-xl px-4 py-3 text-sm font-semibold transition focus:outline-none focus:ring-2 focus:ring-primary/50 disabled:pointer-events-none disabled:opacity-50 w-full gradient-violet text-primary-foreground hover:opacity-95"
-              >
-                Create account
-              </button>
-              <p className="text-center text-xs text-muted-foreground">
-                By continuing, you agree to our Terms and Privacy Policy.
-              </p>
-            </form>
-          </div>
+                id="email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="you@codepath.dev"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium leading-6 text-muted-foreground" htmlFor="password">
+                Password
+              </label>
+              <input
+                className="mt-2 block w-full rounded-xl border border-border bg-background px-4 py-3 text-sm text-foreground shadow-sm transition focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 disabled:cursor-not-allowed disabled:opacity-50"
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Min. 8 characters"
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="inline-flex w-full items-center justify-center rounded-xl gradient-violet px-4 py-3 text-sm font-semibold text-primary-foreground transition hover:opacity-95 focus:outline-none focus:ring-2 focus:ring-primary/50 disabled:pointer-events-none disabled:opacity-50"
+            >
+              Create account
+            </button>
+
+            <p className="text-center text-xs text-muted-foreground">
+              By continuing, you agree to our Terms and Privacy Policy.
+            </p>
+          </form>
         </div>
       </div>
-   </>
+    </div>
   );
-}
-export default RegisterPage
+};
+
+export default RegisterPage;
