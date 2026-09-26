@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Star, MapPin, Briefcase, Calendar, Pencil, TrendingUp, Clock, Users, Award, MessageSquare, Copy, Check, Sparkles } from 'lucide-react'
 import MentorHeader from '../components/MentorHeader'
 import MentorSidebar from '../components/MentorSidebar'
+import UpdateProfileModal from '../components/MentorProfile/UpdateProfileModal'
 
 // ---- mock data, swap with your API/query hook ----
 const mentor = {
@@ -57,9 +58,8 @@ function MentorProfile() {
       <div className="flex min-w-0 flex-1 flex-col">
         <MentorHeader onMenuClick={() => setMobileNavOpen(true)} />
         <main className="flex-1 overflow-y-auto bg-background p-3 md:p-5">
-          <div className="mx-auto max-w-7xl">
             {/* Hero card */}
-            <div className="overflow-hidden rounded-2xl border border-border/50 bg-card/60 shadow-lg backdrop-blur-xl">
+            <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-lg">
               <div className="gradient-violet h-28 w-full md:h-36" />
               <div className="px-5 pb-5 md:px-8 md:pb-6">
                 <div className="-mt-10 flex flex-wrap items-end justify-between gap-4 md:-mt-12">
@@ -90,19 +90,16 @@ function MentorProfile() {
                     </div>
                   </div>
 
-                  <div className="flex flex-wrap items-center gap-2">
+                  <div className="flex flex-wrap items-center  gap-2">
                     <div className="rounded-lg border border-border/50 bg-background/40 px-3 py-2 text-right backdrop-blur-md">
                       <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Hourly</div>
                       <div className="font-display text-xl font-semibold text-foreground">${mentor.hourlyRate}</div>
                     </div>
-                    <button className="inline-flex items-center gap-2 rounded-full border border-border/50 bg-card/50 px-4 py-2 text-sm font-medium text-foreground backdrop-blur-md transition-colors hover:bg-secondary/60">
+                    <button className="inline-flex items-center gap-2  border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-8 rounded-md px-3 text-xs">
                       <Calendar className="h-4 w-4" />
                       Availability
                     </button>
-                    <button className="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90">
-                      <Pencil className="h-4 w-4" />
-                      Edit profile
-                    </button>
+                    <UpdateProfileModal/>
                   </div>
                 </div>
               </div>
@@ -291,7 +288,6 @@ function MentorProfile() {
                 </div>
               </div>
             </div>
-          </div>
         </main>
       </div>
     </div>
