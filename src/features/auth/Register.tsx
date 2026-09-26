@@ -62,7 +62,11 @@ const RegisterPage = () => {
     console.log("input data is= ", payload);
 
     toast.success("Account created!");
-  
+     if(role =="learner"){
+      nav("/student/dashboard")
+     }else{
+      nav('/mentor/dashboard')
+     }
     
     setName("");
     setEmail("");
