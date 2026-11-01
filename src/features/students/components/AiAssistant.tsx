@@ -7,27 +7,23 @@ import {
   Bot,
   User as UserIcon,
   Loader2,
+  Maximize2,
+  Minimize2,
 } from "lucide-react";
 
-type Msg = { role: "user" | "assistant"; content: string };
-
-const SUGGESTIONS = [
-  "Explain closures in JavaScript",
-  "Difference between let, const, var?",
-  "How does async/await work?",
-  "Give me a React useState example",
-  "Explain SQL JOINs with examples",
-];
-
-// No backend yet — simulate a delay, then always resolve as an error.
-// Swap this for a real fetch/server-fn call once the AI endpoint exists.
-async function fetchAiReply(_messages: Msg[]): Promise<string> {
-  await new Promise((resolve) => setTimeout(resolve, 1200));
-  throw new Error("AI tutor isn't connected yet — coming soon.");
-}
-
 export default function AiAssistant() {
+  type Msg = { role: "user" | "assistant"; content: string };
+
+  const SUGGESTIONS = [
+    "Explain closures in JavaScript",
+    "Difference between let, const, var?",
+    "How does async/await work?",
+    "Give me a React useState example",
+    "Explain SQL JOINs with examples",
+  ];
+
   const [open, setOpen] = useState(false);
+  const [expanded, setExpanded] = useState(false);
   const [messages, setMessages] = useState<Msg[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -53,8 +49,9 @@ export default function AiAssistant() {
     setMessages(next);
     setLoading(true);
     try {
-      const reply = await fetchAiReply(next);
-      setMessages([...next, { role: "assistant", content: reply }]);
+      // placeholder AI call (was fetchAiReply) — replace with real API later
+      await new Promise((resolve) => setTimeout(resolve, 1200));
+      throw new Error("AI tutor isn't connected yet — coming soon.");
     } catch (e) {
       setError(e instanceof Error ? e.message : "Something went wrong");
     } finally {
@@ -92,9 +89,11 @@ export default function AiAssistant() {
 
       {/* Right panel */}
       <aside
-        className={`fixed right-0 top-0 z-50 flex h-screen w-[92vw] max-w-[420px] flex-col border-l border-border bg-card shadow-2xl transition-transform duration-300 sm:w-[400px] xl:w-[22vw] xl:min-w-[340px] xl:max-w-[440px] ${
-          open ? "translate-x-0" : "translate-x-full"
-        }`}
+        className={`fixed right-0 top-0 z-50 flex h-screen flex-col border-l border-border bg-card shadow-2xl transition-all duration-300 ${
+          expanded
+            ? "w-screen max-w-none"
+            : "w-[92vw] max-w-[420px] sm:w-[400px] xl:w-[22vw] xl:min-w-[340px] xl:max-w-[440px]"
+        } ${open ? "translate-x-0" : "translate-x-full"}`}
         aria-hidden={!open}
       >
         <div className="flex items-center justify-between border-b border-border bg-gradient-to-r from-primary/10 to-transparent px-4 py-3">
@@ -118,7 +117,18 @@ export default function AiAssistant() {
               <MessageSquarePlus className="size-4" />
             </button>
             <button
-              onClick={() => setOpen(false)}
+              onClick={() => setExpanded((v) => !v)}
+              title={expanded ? "Minimize" : "Full screen"}
+              aria-label={expanded ? "Minimize" : "Full screen"}
+              className="flex size-8 items-center justify-center rounded-lg text-muted-foreground hover:bg-secondary hover:text-foreground"
+            >
+              {expanded ? <Minimize2 className="size-4" /> : <Maximize2 className="size-4" />}
+            </button>
+            <button
+              onClick={() => {
+                setOpen(false);
+                setExpanded(false);
+              }}
               title="Close"
               className="flex size-8 items-center justify-center rounded-lg text-muted-foreground hover:bg-secondary hover:text-foreground"
             >
