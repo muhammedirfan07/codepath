@@ -5,6 +5,8 @@ import logo from "../../assets/LOGO.png";
 import { ArrowLeft, Code2, GraduationCap, Sparkles, Star, Users } from "lucide-react";
 import { ThreeDMarquee } from "../../ui/3d-marquee";
 import { cn } from "../../lib/utils";
+import { mentorRegisterAPI, studentRegisterAPI } from "../../service/apis/authenicationAPI";
+
 
 const marqueeImages = [
   "https://assets.aceternity.com/cloudinary_bkp/3d-card.png",
@@ -40,47 +42,45 @@ const marqueeImages = [
   "https://assets.aceternity.com/world-map.webp",
 ];
 
-interface RegisterPayload {
-  name: string;
-  email: string;
-  password: string;
-  role: "learner" | "mentor";
-}
 
 const RegisterPage = () => {
   const nav = useNavigate();
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [role, setRole] = useState<"learner" | "mentor">("learner");
+  const [inputData,setInputData ]=useState({
+   fullName:"",email:"" ,password:"",role: "student" as "student" | "mentor",
+  })
+const submit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  const { fullName, email, password } = inputData;
 
-  const submit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!name || !email || !password) return toast.error("Fill all fields");
+  if (!fullName || !email || !password) return toast.error("Fill all fields");
+  if (password.length < 8) return toast.error("Password must be at least 8 characters");
 
-    const payload: RegisterPayload = { name, email, password, role };
-    console.log("input data is= ", payload);
+  try {
+    const res =
+      inputData.role === "student"
+        ? await studentRegisterAPI(inputData)
+        : await mentorRegisterAPI(inputData);
 
-    toast.success("Account created!");
-     if(role =="learner"){
-      nav("/student/dashboard")
-     }else{
-      nav('/mentor/dashboard')
-     }
-    
-    setName("");
-    setEmail("");
-    setPassword("");
-    setRole("learner");
-  };
+    if (res.status === 201) {
+      toast.success(res.data?.message );
+      setInputData({ fullName: "", email: "", password: "", role: "student" });
+      nav("/login");   
+    } else {
+      toast.warning(res.response?.data?.error );
+    }
+  } catch (error) {
+    console.log(error);
+    toast.error("Something went wrong");
+  }
+};
 
   const roleTiles: {
-    value: "learner" | "mentor";
+    value: "student" | "mentor";
     icon: typeof GraduationCap;
     label: string;
     desc: string;
   }[] = [
-    { value: "learner", icon: GraduationCap, label: "Learner", desc: "Lessons, quizzes, mentors" },
+    { value: "student", icon: GraduationCap, label: "Learner", desc: "Lessons, quizzes, mentors" },
     { value: "mentor", icon: Users, label: "Mentor", desc: "Teach & earn" },
   ];
 
@@ -166,12 +166,12 @@ const RegisterPage = () => {
               </label>
               <div className="mt-2 grid grid-cols-2 gap-2">
                 {roleTiles.map(({ value, icon: Icon, label, desc }) => {
-                  const active = role === value;
+                  const active = inputData.role === value;
                   return (
                     <button
                       key={value}
                       type="button"
-                      onClick={() => setRole(value)}
+                      onClick={() => setInputData({...inputData,role:value})}
                       className={cn(
                         "flex items-start gap-3 rounded-xl border p-3 text-left transition-all",
                         active
@@ -204,8 +204,8 @@ const RegisterPage = () => {
               <input
                 className="mt-2 block w-full rounded-xl border border-border bg-background px-4 py-3 text-sm text-foreground shadow-sm transition focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 disabled:cursor-not-allowed disabled:opacity-50"
                 id="name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                value={inputData.fullName}
+                onChange={(e) => setInputData({...inputData,fullName:e.target.value})}
                 placeholder=" your name"
               />
             </div>
@@ -218,8 +218,8 @@ const RegisterPage = () => {
                 className="mt-2 block w-full rounded-xl border border-border bg-background px-4 py-3 text-sm text-foreground shadow-sm transition focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 disabled:cursor-not-allowed disabled:opacity-50"
                 id="email"
                 type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={inputData.email}
+                onChange={(e) => setInputData({...inputData,email:e.target.value})}
                 placeholder="you@codepath.dev"
               />
             </div>
@@ -232,8 +232,8 @@ const RegisterPage = () => {
                 className="mt-2 block w-full rounded-xl border border-border bg-background px-4 py-3 text-sm text-foreground shadow-sm transition focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 disabled:cursor-not-allowed disabled:opacity-50"
                 id="password"
                 type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                value={inputData.password}
+                onChange={(e) => setInputData({...inputData,password:e.target.value})}
                 placeholder="Min. 8 characters"
               />
             </div>
